@@ -6,10 +6,11 @@ using System.Drawing;
 using System.Threading;
 using System.Runtime.InteropServices;
 
-//Ryan Harrison 2011
-//raharrison.co.uk
-//mail@raharrison.co.uk
 
+/// <summary>
+/// Credit goes to Ryan Harrison (raharrison on GitHub) for starting this project.
+/// I'm introducing my own spin on it with some changes that hopefully help with games that are less auto-click friendly.
+/// </summary>
 namespace Auto_Clicker
 {
     public partial class MainForm : Form
@@ -44,7 +45,9 @@ namespace Auto_Clicker
         private void MainForm_Load(object sender, EventArgs e)
         {
             CurrentPositionTimer.Start();
-            PositionsListView.Items.Clear();
+            PositionsGridView.Rows.Clear();
+            //PositionsGridView.SelectedCells.
+            //PositionsListView.Items.Clear();
         }
 
         /// <summary>
@@ -101,14 +104,15 @@ namespace Auto_Clicker
                 {
                     //Add item holding coordinates, right/left click and sleep time to list view
                     //holding all queued clicks
-                    ListViewItem item = new ListViewItem(QueuedXPositionTextBox.Text);
-                    item.SubItems.Add(QueuedYPositionTextBox.Text);
+                    //ListViewItem item = new ListViewItem(QueuedXPositionTextBox.Text);
+                    //item.SubItems.Add(QueuedYPositionTextBox.Text);
                     string clickType = (RightClickCheckBox.Checked) == true ? "R" : "L";
 
                     int sleepTime = Convert.ToInt32(SleepTimeTextBox.Text);
-                    item.SubItems.Add(clickType);
-                    item.SubItems.Add(sleepTime.ToString());
-                    PositionsListView.Items.Add(item);
+                    //item.SubItems.Add(clickType);
+                    //item.SubItems.Add(sleepTime.ToString());
+                    //PositionsListView.Items.Add(item);
+                    PositionsGridView.Rows.Add(QueuedXPositionTextBox.Text, QueuedYPositionTextBox.Text, clickType, sleepTime.ToString());
                 }
                 else
                 {
@@ -133,16 +137,20 @@ namespace Auto_Clicker
                 List<string> clickType = new List<string>();
                 List<int> times = new List<int>();
 
-                foreach (ListViewItem item in PositionsListView.Items)
+                foreach (DataGridViewRow row in PositionsGridView.Rows)//ListViewItem item in PositionsListView.Items)
                 {
-                    //Add data in queued clicks to corresponding List collection
-                    int x = Convert.ToInt32(item.Text); //x coordinate
-                    int y = Convert.ToInt32(item.SubItems[1].Text); //y coordinate
-                    clickType.Add(item.SubItems[2].Text); //click type
-                    times.Add(Convert.ToInt32(item.SubItems[3].Text)); //sleep time
+                    if (row.Cells[0].Value != null && row.Cells[1].Value != null)
+                    {
+                        //Add data in queued clicks to corresponding List collection
+                        int x = Convert.ToInt32(row.Cells[0].Value); //x coordinate
+                        int y = Convert.ToInt32(row.Cells[1].Value); //y coordinate
+                        clickType.Add(row.Cells[2].Value.ToString()); //click type
+                        times.Add(Convert.ToInt32(row.Cells[3].Value)); //sleep time
 
-                    points.Add(new Point(x, y));
+                        points.Add(new Point(x, y));
+                    }
                 }
+
                 try
                 {
                     //Create a ClickHelper passing Lists of click information
@@ -154,7 +162,7 @@ namespace Auto_Clicker
                 }
                 catch (Exception exc)
                 {
-                    MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                    MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -192,7 +200,36 @@ namespace Auto_Clicker
         /// </summary>
         private void RemoveAllMenuItem_Click(object sender, EventArgs e)
         {
-            PositionsListView.Items.Clear();
+            //PositionsListView.Items.Clear();
+            PositionsGridView.Rows.Clear();
+        }
+
+        private void PositionsGridView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int currentMouseOverRow = PositionsGridView.HitTest(e.X, e.Y).RowIndex;
+
+                if (currentMouseOverRow >= 0)
+                {
+                    ListViewContextMenu.Show(Cursor.Position);
+                }
+
+                //ContextMenu m = new ContextMenu();
+                //m.MenuItems.Add(new MenuItem("Cut"));
+                //m.MenuItems.Add(new MenuItem("Copy"));
+                //m.MenuItems.Add(new MenuItem("Paste"));
+
+                //int currentMouseOverRow = PositionsGridView.HitTest(e.X, e.Y).RowIndex;
+
+                //if (currentMouseOverRow >= 0)
+                //{
+                //    m.MenuItems.Add(new MenuItem(string.Format("Do something to row {0}", currentMouseOverRow.ToString())));
+                //}
+
+                //m.Show(PositionsGridView, new Point(e.X, e.Y));
+
+            }
         }
 
         /// <summary>
@@ -200,7 +237,56 @@ namespace Auto_Clicker
         /// </summary>
         private void RemoveSelectedMenuItem_Click(object sender, EventArgs e)
         {
-            PositionsListView.SelectedItems[0].Remove();
+            //PositionsListView.SelectedItems[0].Remove();
+            foreach (DataGridViewRow item in this.PositionsGridView.SelectedRows)
+            {
+                PositionsGridView.Rows.RemoveAt(item.Index);
+            }
+        }
+
+        //Not exactly what I had in mind
+        private void PositionsGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //works for one cell at a time
+            //PositionsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = Clipboard.GetText();
+
+            //This is perfect but need to be careful with doubleclick
+            string s = Clipboard.GetText();
+            string[] lines = s.Split('\n');
+            int row = PositionsGridView.CurrentCell.RowIndex;
+            int col = PositionsGridView.CurrentCell.ColumnIndex;
+            foreach (string line in lines)
+            {
+                string[] cells = line.Split('\t');
+                int cellsSelected = cells.Length;
+                if (row < PositionsGridView.Rows.Count)
+                {
+                    for (int i = 0; i < cellsSelected; i++)
+                    {
+                        if (col + i < PositionsGridView.Columns.Count)
+                            PositionsGridView[col + i, row].Value = cells[i];
+                        else
+                            break;
+                    }
+                    row++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        //Import from Excel
+        private void ImportButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //Save as Excel? CSV?
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
@@ -270,6 +356,8 @@ namespace Auto_Clicker
             public int Iterations { get; set; } //Hold the number of iterations/repeats
             public List<string> ClickType { get; set; } //Is each point right click or left click
             public List<int> Times { get; set; } //Holds sleep times for after each click
+            public int[] PointVariance { get; set; } //Holds variance for pixel variants for click points
+            public int TimeVariance { get; set; } //Holds variance for pixel variants for click points
 
             //Import unmanaged functions from DLL library
             [DllImport("user32.dll")]
@@ -411,7 +499,10 @@ namespace Auto_Clicker
                         //Iterate through all queued clicks
                         for (int j = 0; j <= Points.Count - 1; j++)
                         {
-                            SetCursorPosition(Points[j]); //Set cursor position before clicking
+                            PointVariance = PointRNGVariance();
+                            Point modPoint = new Point(Points[j].X + PointVariance[0], Points[j].Y + PointVariance[1]);
+
+                            SetCursorPosition(modPoint); //Set cursor position onto modded position before clicking
                             if (ClickType[j].Equals("R"))
                             {
                                 ClickRightMouseButtonSendInput();
@@ -420,7 +511,8 @@ namespace Auto_Clicker
                             {
                                 ClickLeftMouseButtonSendInput();
                             }
-                            Thread.Sleep(Times[j]);
+                            TimeVariance = TimeRNGVariance();
+                            Thread.Sleep(Times[j] + TimeVariance); //Add in rng time variance
                         }
                         i++;
                     }
@@ -440,8 +532,58 @@ namespace Auto_Clicker
                 Cursor.Position = point;
             }
 
+            /// <summary>
+            /// Include pixel variance based on RNG and an acceptable range.
+            /// </summary>
+            /// <returns></returns>
+            private int[] PointRNGVariance()
+            {
+                Random pointxrng = new Random();
+                Random pointyrng = new Random();
+                Random pointxcoin = new Random();
+                Random pointycoin = new Random();
+                int[] pointVar = new int[2];
+                int[] genRNG = new int[4];
+
+                genRNG[0] = pointxrng.Next(0, 15);
+                genRNG[1] = pointxcoin.Next(1, 2);
+                genRNG[2] = pointyrng.Next(0, 10);
+                genRNG[3] = pointycoin.Next(1, 2);
+
+                if (genRNG[1] == 2)
+                {
+                    genRNG[0] = genRNG[0] * -1;
+                }
+
+                if (genRNG[3] == 2)
+                {
+                    genRNG[2] = genRNG[2] * -1;
+                }
+
+                pointVar[0] = genRNG[0];
+                pointVar[1] = genRNG[2];
+
+                return pointVar;
+            }
+
+            /// <summary>
+            /// Include time variance based on RNG and an acceptable range.
+            /// </summary>
+            /// <returns></returns>
+            private int TimeRNGVariance()
+            {
+
+                Random timerng = new Random();
+                int timeVar;
+
+                timeVar = timerng.Next(0, 500);
+
+                return timeVar;
+            }
+
             #endregion
         }
+
 
         #endregion
     }

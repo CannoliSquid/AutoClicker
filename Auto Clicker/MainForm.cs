@@ -102,16 +102,10 @@ namespace Auto_Clicker
             {
                 if (IsValidNumericalInput(SleepTimeTextBox.Text))
                 {
-                    //Add item holding coordinates, right/left click and sleep time to list view
-                    //holding all queued clicks
-                    //ListViewItem item = new ListViewItem(QueuedXPositionTextBox.Text);
-                    //item.SubItems.Add(QueuedYPositionTextBox.Text);
+                    //Add coordinates, right/left click and sleep time to data grid view holding all queued clicks
                     string clickType = (RightClickCheckBox.Checked) == true ? "R" : "L";
-
                     int sleepTime = Convert.ToInt32(SleepTimeTextBox.Text);
-                    //item.SubItems.Add(clickType);
-                    //item.SubItems.Add(sleepTime.ToString());
-                    //PositionsListView.Items.Add(item);
+
                     PositionsGridView.Rows.Add(QueuedXPositionTextBox.Text, QueuedYPositionTextBox.Text, clickType, sleepTime.ToString());
                 }
                 else
@@ -204,6 +198,7 @@ namespace Auto_Clicker
             PositionsGridView.Rows.Clear();
         }
 
+        //Right click to open context menu - need to fix
         private void PositionsGridView_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -358,6 +353,8 @@ namespace Auto_Clicker
             public List<int> Times { get; set; } //Holds sleep times for after each click
             public int[] PointVariance { get; set; } //Holds variance for pixel variants for click points
             public int TimeVariance { get; set; } //Holds variance for pixel variants for click points
+            //public delegate void InvokeDelegate(int num);
+            Label iterCount = Application.OpenForms["MainForm"].Controls["StartingOptionsGroupBox"].Controls["IterationLabel"] as Label;
 
             //Import unmanaged functions from DLL library
             [DllImport("user32.dll")]
@@ -496,6 +493,8 @@ namespace Auto_Clicker
 
                     while (i <= Iterations)
                     {
+                        iterCount.BeginInvoke(new Action(() => UpdateLabel(i)));
+
                         //Iterate through all queued clicks
                         for (int j = 0; j <= Points.Count - 1; j++)
                         {
@@ -514,6 +513,7 @@ namespace Auto_Clicker
                             TimeVariance = TimeRNGVariance();
                             Thread.Sleep(Times[j] + TimeVariance); //Add in rng time variance
                         }
+                        
                         i++;
                     }
                 }
@@ -521,6 +521,11 @@ namespace Auto_Clicker
                 {
                     MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+
+            public void UpdateLabel(int arg)
+            {
+                iterCount.Text = arg.ToString();
             }
 
             /// <summary>
@@ -545,9 +550,10 @@ namespace Auto_Clicker
                 int[] pointVar = new int[2];
                 int[] genRNG = new int[4];
 
-                genRNG[0] = pointxrng.Next(0, 15);
+                //use 7 for x/5 for y
+                genRNG[0] = pointxrng.Next(0, 1);
                 genRNG[1] = pointxcoin.Next(1, 2);
-                genRNG[2] = pointyrng.Next(0, 10);
+                genRNG[2] = pointyrng.Next(0, 1);
                 genRNG[3] = pointycoin.Next(1, 2);
 
                 if (genRNG[1] == 2)

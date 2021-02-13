@@ -31,6 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.PositionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.ImportButton = new System.Windows.Forms.Button();
+            this.PositionsGridView = new System.Windows.Forms.DataGridView();
+            this.xColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.yColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.leftOrRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tTSleep = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SleepTimeTextBox = new System.Windows.Forms.TextBox();
             this.QueuedYPositionTextBox = new System.Windows.Forms.TextBox();
             this.RightClickCheckBox = new System.Windows.Forms.CheckBox();
@@ -39,10 +46,10 @@
             this.QueuedXPositionLabel = new System.Windows.Forms.Label();
             this.QueuedYPositionLabel = new System.Windows.Forms.Label();
             this.QueuedXPositionTextBox = new System.Windows.Forms.TextBox();
+            this.QueuedPositionsLabel = new System.Windows.Forms.Label();
             this.ListViewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.RemoveAllMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveSelectedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.QueuedPositionsLabel = new System.Windows.Forms.Label();
             this.CurrentPosGroupBox = new System.Windows.Forms.GroupBox();
             this.CopyToAddButton = new System.Windows.Forms.Button();
             this.CurrentYCoordTextBox = new System.Windows.Forms.TextBox();
@@ -55,18 +62,13 @@
             this.NumRepeatsTextBox = new System.Windows.Forms.TextBox();
             this.NumRepeatsLabel = new System.Windows.Forms.Label();
             this.CurrentPositionTimer = new System.Windows.Forms.Timer(this.components);
-            this.PositionsGridView = new System.Windows.Forms.DataGridView();
-            this.xColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.yColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.leftOrRight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tTSleep = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImportButton = new System.Windows.Forms.Button();
-            this.SaveButton = new System.Windows.Forms.Button();
+            this.IterationDescLabel = new System.Windows.Forms.Label();
+            this.IterationLabel = new System.Windows.Forms.Label();
             this.PositionsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PositionsGridView)).BeginInit();
             this.ListViewContextMenu.SuspendLayout();
             this.CurrentPosGroupBox.SuspendLayout();
             this.StartingOptionsGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PositionsGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // PositionsGroupBox
@@ -89,6 +91,60 @@
             this.PositionsGroupBox.TabIndex = 0;
             this.PositionsGroupBox.TabStop = false;
             this.PositionsGroupBox.Text = "Cursor Positions";
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(402, 306);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(84, 20);
+            this.SaveButton.TabIndex = 14;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
+            // ImportButton
+            // 
+            this.ImportButton.Location = new System.Drawing.Point(402, 277);
+            this.ImportButton.Name = "ImportButton";
+            this.ImportButton.Size = new System.Drawing.Size(85, 21);
+            this.ImportButton.TabIndex = 13;
+            this.ImportButton.Text = "Import";
+            this.ImportButton.UseVisualStyleBackColor = true;
+            this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
+            // 
+            // PositionsGridView
+            // 
+            this.PositionsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PositionsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.xColumn,
+            this.yColumn,
+            this.leftOrRight,
+            this.tTSleep});
+            this.PositionsGridView.Location = new System.Drawing.Point(6, 32);
+            this.PositionsGridView.Name = "PositionsGridView";
+            this.PositionsGridView.Size = new System.Drawing.Size(481, 237);
+            this.PositionsGridView.TabIndex = 12;
+            this.PositionsGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PositionsGridView_CellDoubleClick);
+            // 
+            // xColumn
+            // 
+            this.xColumn.HeaderText = "X";
+            this.xColumn.Name = "xColumn";
+            // 
+            // yColumn
+            // 
+            this.yColumn.HeaderText = "Y";
+            this.yColumn.Name = "yColumn";
+            // 
+            // leftOrRight
+            // 
+            this.leftOrRight.HeaderText = "L/R";
+            this.leftOrRight.Name = "leftOrRight";
+            // 
+            // tTSleep
+            // 
+            this.tTSleep.HeaderText = "Time to Sleep";
+            this.tTSleep.Name = "tTSleep";
             // 
             // SleepTimeTextBox
             // 
@@ -159,6 +215,15 @@
             this.QueuedXPositionTextBox.Size = new System.Drawing.Size(87, 20);
             this.QueuedXPositionTextBox.TabIndex = 8;
             // 
+            // QueuedPositionsLabel
+            // 
+            this.QueuedPositionsLabel.AutoSize = true;
+            this.QueuedPositionsLabel.Location = new System.Drawing.Point(3, 16);
+            this.QueuedPositionsLabel.Name = "QueuedPositionsLabel";
+            this.QueuedPositionsLabel.Size = new System.Drawing.Size(123, 13);
+            this.QueuedPositionsLabel.TabIndex = 0;
+            this.QueuedPositionsLabel.Text = "Queued Cursor Positions";
+            // 
             // ListViewContextMenu
             // 
             this.ListViewContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -181,15 +246,6 @@
             this.RemoveSelectedMenuItem.Text = "Remove Selected";
             this.RemoveSelectedMenuItem.Click += new System.EventHandler(this.RemoveSelectedMenuItem_Click);
             // 
-            // QueuedPositionsLabel
-            // 
-            this.QueuedPositionsLabel.AutoSize = true;
-            this.QueuedPositionsLabel.Location = new System.Drawing.Point(3, 16);
-            this.QueuedPositionsLabel.Name = "QueuedPositionsLabel";
-            this.QueuedPositionsLabel.Size = new System.Drawing.Size(123, 13);
-            this.QueuedPositionsLabel.TabIndex = 0;
-            this.QueuedPositionsLabel.Text = "Queued Cursor Positions";
-            // 
             // CurrentPosGroupBox
             // 
             this.CurrentPosGroupBox.Controls.Add(this.CopyToAddButton);
@@ -197,7 +253,7 @@
             this.CurrentPosGroupBox.Controls.Add(this.XCoordLabel);
             this.CurrentPosGroupBox.Controls.Add(this.YCoordLabel);
             this.CurrentPosGroupBox.Controls.Add(this.CurrentXCoordTextBox);
-            this.CurrentPosGroupBox.Location = new System.Drawing.Point(12, 12);
+            this.CurrentPosGroupBox.Location = new System.Drawing.Point(12, 3);
             this.CurrentPosGroupBox.Name = "CurrentPosGroupBox";
             this.CurrentPosGroupBox.Size = new System.Drawing.Size(267, 157);
             this.CurrentPosGroupBox.TabIndex = 2;
@@ -248,13 +304,15 @@
             // 
             // StartingOptionsGroupBox
             // 
+            this.StartingOptionsGroupBox.Controls.Add(this.IterationLabel);
+            this.StartingOptionsGroupBox.Controls.Add(this.IterationDescLabel);
             this.StartingOptionsGroupBox.Controls.Add(this.StopClickingButton);
             this.StartingOptionsGroupBox.Controls.Add(this.StartClickingButton);
             this.StartingOptionsGroupBox.Controls.Add(this.NumRepeatsTextBox);
             this.StartingOptionsGroupBox.Controls.Add(this.NumRepeatsLabel);
-            this.StartingOptionsGroupBox.Location = new System.Drawing.Point(12, 188);
+            this.StartingOptionsGroupBox.Location = new System.Drawing.Point(12, 166);
             this.StartingOptionsGroupBox.Name = "StartingOptionsGroupBox";
-            this.StartingOptionsGroupBox.Size = new System.Drawing.Size(267, 155);
+            this.StartingOptionsGroupBox.Size = new System.Drawing.Size(267, 177);
             this.StartingOptionsGroupBox.TabIndex = 2;
             this.StartingOptionsGroupBox.TabStop = false;
             this.StartingOptionsGroupBox.Text = "Starting Options";
@@ -301,59 +359,22 @@
             this.CurrentPositionTimer.Interval = 1;
             this.CurrentPositionTimer.Tick += new System.EventHandler(this.CurrentPositionTimer_Tick);
             // 
-            // PositionsGridView
+            // IterationDescLabel
             // 
-            this.PositionsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PositionsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.xColumn,
-            this.yColumn,
-            this.leftOrRight,
-            this.tTSleep});
-            this.PositionsGridView.Location = new System.Drawing.Point(6, 32);
-            this.PositionsGridView.Name = "PositionsGridView";
-            this.PositionsGridView.Size = new System.Drawing.Size(481, 237);
-            this.PositionsGridView.TabIndex = 12;
-            this.PositionsGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PositionsGridView_CellDoubleClick);
+            this.IterationDescLabel.AutoSize = true;
+            this.IterationDescLabel.Location = new System.Drawing.Point(6, 150);
+            this.IterationDescLabel.Name = "IterationDescLabel";
+            this.IterationDescLabel.Size = new System.Drawing.Size(117, 13);
+            this.IterationDescLabel.TabIndex = 4;
+            this.IterationDescLabel.Text = "Currently on Iteration #:";
             // 
-            // xColumn
+            // IterationLabel
             // 
-            this.xColumn.HeaderText = "X";
-            this.xColumn.Name = "xColumn";
-            // 
-            // yColumn
-            // 
-            this.yColumn.HeaderText = "Y";
-            this.yColumn.Name = "yColumn";
-            // 
-            // leftOrRight
-            // 
-            this.leftOrRight.HeaderText = "L/R";
-            this.leftOrRight.Name = "leftOrRight";
-            // 
-            // tTSleep
-            // 
-            this.tTSleep.HeaderText = "Time to Sleep";
-            this.tTSleep.Name = "tTSleep";
-            // 
-            // ImportButton
-            // 
-            this.ImportButton.Location = new System.Drawing.Point(402, 277);
-            this.ImportButton.Name = "ImportButton";
-            this.ImportButton.Size = new System.Drawing.Size(85, 21);
-            this.ImportButton.TabIndex = 13;
-            this.ImportButton.Text = "Import";
-            this.ImportButton.UseVisualStyleBackColor = true;
-            this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.Location = new System.Drawing.Point(402, 306);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(84, 20);
-            this.SaveButton.TabIndex = 14;
-            this.SaveButton.Text = "Save";
-            this.SaveButton.UseVisualStyleBackColor = true;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            this.IterationLabel.AutoSize = true;
+            this.IterationLabel.Location = new System.Drawing.Point(129, 150);
+            this.IterationLabel.Name = "IterationLabel";
+            this.IterationLabel.Size = new System.Drawing.Size(0, 13);
+            this.IterationLabel.TabIndex = 5;
             // 
             // MainForm
             // 
@@ -373,12 +394,12 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.PositionsGroupBox.ResumeLayout(false);
             this.PositionsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PositionsGridView)).EndInit();
             this.ListViewContextMenu.ResumeLayout(false);
             this.CurrentPosGroupBox.ResumeLayout(false);
             this.CurrentPosGroupBox.PerformLayout();
             this.StartingOptionsGroupBox.ResumeLayout(false);
             this.StartingOptionsGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PositionsGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -417,6 +438,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn tTSleep;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button ImportButton;
+        private System.Windows.Forms.Label IterationLabel;
+        private System.Windows.Forms.Label IterationDescLabel;
     }
 }
 

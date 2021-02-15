@@ -500,8 +500,16 @@ namespace Auto_Clicker
                         {
                             PointVariance = PointRNGVariance();
                             Point modPoint = new Point(Points[j].X + PointVariance[0], Points[j].Y + PointVariance[1]);
+                            
+                            if (j >= 1)
+                            {
+                                LinearSmoothMove(Points[j-1], modPoint, 80, 1);
+                            }
+                            else
+                            {
+                                SetCursorPosition(modPoint); //Set cursor position onto modded position before clicking
+                            }
 
-                            SetCursorPosition(modPoint); //Set cursor position onto modded position before clicking
                             if (ClickType[j].Equals("R"))
                             {
                                 ClickRightMouseButtonSendInput();
@@ -510,8 +518,10 @@ namespace Auto_Clicker
                             {
                                 ClickLeftMouseButtonSendInput();
                             }
+
                             TimeVariance = TimeRNGVariance();
                             Thread.Sleep(Times[j] + TimeVariance); //Add in rng time variance
+                            
                         }
                         
                         i++;
@@ -523,9 +533,35 @@ namespace Auto_Clicker
                 }
             }
 
+            //Update Label
             public void UpdateLabel(int arg)
             {
                 iterCount.Text = arg.ToString();
+            }
+
+            //Move cursor along in a straight line.
+            public void LinearSmoothMove(Point startingPosition, Point newPosition, int steps, int sleepTime)
+            {
+                //Point start = GetCursorPosition();
+                PointF iterPoint = startingPosition;
+
+                // Find the slope of the line segment defined by start and newPosition
+                PointF slope = new PointF(newPosition.X - startingPosition.X, newPosition.Y - startingPosition.Y);
+
+                // Divide by the number of steps
+                slope.X = slope.X / steps;
+                slope.Y = slope.Y / steps;
+
+                // Move the mouse to each iterative point.
+                for (int i = 0; i < steps; i++)
+                {
+                    iterPoint = new PointF(iterPoint.X + slope.X, iterPoint.Y + slope.Y);
+                    SetCursorPosition(Point.Round(iterPoint));
+                    Thread.Sleep(sleepTime);
+                }
+
+                // Move the mouse to the final destination.
+                SetCursorPosition(newPosition);
             }
 
             /// <summary>

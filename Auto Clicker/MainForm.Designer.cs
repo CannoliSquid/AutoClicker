@@ -57,13 +57,13 @@
             this.YCoordLabel = new System.Windows.Forms.Label();
             this.CurrentXCoordTextBox = new System.Windows.Forms.TextBox();
             this.StartingOptionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.IterationLabel = new System.Windows.Forms.Label();
+            this.IterationDescLabel = new System.Windows.Forms.Label();
             this.StopClickingButton = new System.Windows.Forms.Button();
             this.StartClickingButton = new System.Windows.Forms.Button();
             this.NumRepeatsTextBox = new System.Windows.Forms.TextBox();
             this.NumRepeatsLabel = new System.Windows.Forms.Label();
             this.CurrentPositionTimer = new System.Windows.Forms.Timer(this.components);
-            this.IterationDescLabel = new System.Windows.Forms.Label();
-            this.IterationLabel = new System.Windows.Forms.Label();
             this.PositionsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PositionsGridView)).BeginInit();
             this.ListViewContextMenu.SuspendLayout();
@@ -94,7 +94,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(402, 306);
+            this.SaveButton.Location = new System.Drawing.Point(401, 305);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(84, 20);
             this.SaveButton.TabIndex = 14;
@@ -104,7 +104,7 @@
             // 
             // ImportButton
             // 
-            this.ImportButton.Location = new System.Drawing.Point(402, 277);
+            this.ImportButton.Location = new System.Drawing.Point(401, 276);
             this.ImportButton.Name = "ImportButton";
             this.ImportButton.Size = new System.Drawing.Size(85, 21);
             this.ImportButton.TabIndex = 13;
@@ -182,11 +182,11 @@
             // 
             // AddPositionButton
             // 
-            this.AddPositionButton.Location = new System.Drawing.Point(15, 277);
+            this.AddPositionButton.Location = new System.Drawing.Point(15, 276);
             this.AddPositionButton.Name = "AddPositionButton";
-            this.AddPositionButton.Size = new System.Drawing.Size(111, 21);
+            this.AddPositionButton.Size = new System.Drawing.Size(131, 21);
             this.AddPositionButton.TabIndex = 4;
-            this.AddPositionButton.Text = "Add Position (F2)";
+            this.AddPositionButton.Text = "Add Position (Shift + F2)";
             this.AddPositionButton.UseVisualStyleBackColor = true;
             this.AddPositionButton.Click += new System.EventHandler(this.AddPositionButton_Click);
             // 
@@ -266,7 +266,7 @@
             this.CopyToAddButton.Name = "CopyToAddButton";
             this.CopyToAddButton.Size = new System.Drawing.Size(252, 30);
             this.CopyToAddButton.TabIndex = 6;
-            this.CopyToAddButton.Text = "Copy to Add Position (F1)";
+            this.CopyToAddButton.Text = "Copy to Add Position (Shift + F1)";
             this.CopyToAddButton.UseVisualStyleBackColor = true;
             this.CopyToAddButton.Click += new System.EventHandler(this.CopyToAddButton_Click);
             // 
@@ -317,13 +317,30 @@
             this.StartingOptionsGroupBox.TabStop = false;
             this.StartingOptionsGroupBox.Text = "Starting Options";
             // 
+            // IterationLabel
+            // 
+            this.IterationLabel.AutoSize = true;
+            this.IterationLabel.Location = new System.Drawing.Point(129, 150);
+            this.IterationLabel.Name = "IterationLabel";
+            this.IterationLabel.Size = new System.Drawing.Size(0, 13);
+            this.IterationLabel.TabIndex = 5;
+            // 
+            // IterationDescLabel
+            // 
+            this.IterationDescLabel.AutoSize = true;
+            this.IterationDescLabel.Location = new System.Drawing.Point(6, 150);
+            this.IterationDescLabel.Name = "IterationDescLabel";
+            this.IterationDescLabel.Size = new System.Drawing.Size(117, 13);
+            this.IterationDescLabel.TabIndex = 4;
+            this.IterationDescLabel.Text = "Currently on Iteration #:";
+            // 
             // StopClickingButton
             // 
             this.StopClickingButton.Location = new System.Drawing.Point(6, 99);
             this.StopClickingButton.Name = "StopClickingButton";
             this.StopClickingButton.Size = new System.Drawing.Size(255, 37);
             this.StopClickingButton.TabIndex = 3;
-            this.StopClickingButton.Text = "Stop Clicking (F4)";
+            this.StopClickingButton.Text = "Stop Clicking (Shift + F4)";
             this.StopClickingButton.UseVisualStyleBackColor = true;
             this.StopClickingButton.Click += new System.EventHandler(this.StopClickingButton_Click);
             // 
@@ -333,7 +350,7 @@
             this.StartClickingButton.Name = "StartClickingButton";
             this.StartClickingButton.Size = new System.Drawing.Size(255, 37);
             this.StartClickingButton.TabIndex = 2;
-            this.StartClickingButton.Text = "Start Clicking Queued Positions (F3)";
+            this.StartClickingButton.Text = "Start Clicking Queued Positions (Shift + F3)";
             this.StartClickingButton.UseVisualStyleBackColor = true;
             this.StartClickingButton.Click += new System.EventHandler(this.StartClickingButton_Click);
             // 
@@ -358,23 +375,6 @@
             // 
             this.CurrentPositionTimer.Interval = 1;
             this.CurrentPositionTimer.Tick += new System.EventHandler(this.CurrentPositionTimer_Tick);
-            // 
-            // IterationDescLabel
-            // 
-            this.IterationDescLabel.AutoSize = true;
-            this.IterationDescLabel.Location = new System.Drawing.Point(6, 150);
-            this.IterationDescLabel.Name = "IterationDescLabel";
-            this.IterationDescLabel.Size = new System.Drawing.Size(117, 13);
-            this.IterationDescLabel.TabIndex = 4;
-            this.IterationDescLabel.Text = "Currently on Iteration #:";
-            // 
-            // IterationLabel
-            // 
-            this.IterationLabel.AutoSize = true;
-            this.IterationLabel.Location = new System.Drawing.Point(129, 150);
-            this.IterationLabel.Name = "IterationLabel";
-            this.IterationLabel.Size = new System.Drawing.Size(0, 13);
-            this.IterationLabel.TabIndex = 5;
             // 
             // MainForm
             // 

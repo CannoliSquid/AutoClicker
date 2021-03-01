@@ -6,12 +6,12 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Auto Clicker")]
+[assembly: AssemblyTitle("Skiller Agent")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ryan Harrison")]
-[assembly: AssemblyProduct("Auto Clicker")]
-[assembly: AssemblyCopyright("Copyright © Ryan Harrison 2011")]
+[assembly: AssemblyCompany("CannoliSquid")]
+[assembly: AssemblyProduct("Skiller Agent")]
+[assembly: AssemblyCopyright("Copyright © CannoliSquid 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

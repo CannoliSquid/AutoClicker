@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Auto_Clicker.Helpers
+namespace SkillerAgent.Helpers
 {
     #region Thread Helper Class
 
@@ -172,12 +172,16 @@ namespace Auto_Clicker.Helpers
 
                         if (j >= 1)
                         {
-                            LinearSmoothMove(Points[j - 1], modPoint, 80, 1);
+                            LinearSmoothMove(Points[j - 1], modPoint, 100, 1);
                         }
                         else
                         {
-                            SetCursorPosition(modPoint); //Set cursor position onto modded position before clicking
+                            LinearSmoothMove(Cursor.Position, modPoint, 100, 1);
+                            //SetCursorPosition(modPoint); //Set cursor position onto modded position before clicking
                         }
+
+                        TimeVariance = TimeRNGVariance();
+                        Thread.Sleep(Times[j] + TimeVariance); //Add in rng time variance
 
                         if (ClickType[j].Equals("R"))
                         {
@@ -187,10 +191,6 @@ namespace Auto_Clicker.Helpers
                         {
                             ClickLeftMouseButtonSendInput();
                         }
-
-                        TimeVariance = TimeRNGVariance();
-                        Thread.Sleep(Times[j] + TimeVariance); //Add in rng time variance
-
                     }
 
                     i++;
@@ -287,7 +287,7 @@ namespace Auto_Clicker.Helpers
             Random timerng = new Random();
             int timeVar;
 
-            timeVar = timerng.Next(0, 856);
+            timeVar = timerng.Next(0, 800);
 
             return timeVar;
         }

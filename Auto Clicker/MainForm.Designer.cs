@@ -1,4 +1,4 @@
-﻿namespace Auto_Clicker
+﻿namespace SkillerAgent
 {
     partial class MainForm
     {
@@ -114,6 +114,7 @@
             // 
             // PositionsGridView
             // 
+            this.PositionsGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.PositionsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.PositionsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.xColumn,
@@ -380,7 +381,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(790, 355);
+            this.ClientSize = new System.Drawing.Size(790, 350);
             this.Controls.Add(this.StartingOptionsGroupBox);
             this.Controls.Add(this.CurrentPosGroupBox);
             this.Controls.Add(this.PositionsGroupBox);
@@ -389,7 +390,7 @@
             this.KeyPreview = true;
             this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Auto Clicker";
+            this.Text = "Skiller Agent";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.PositionsGroupBox.ResumeLayout(false);

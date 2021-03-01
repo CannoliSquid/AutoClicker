@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Auto_Clicker.Properties {
+namespace Sillker_Agent.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -5,14 +5,16 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Threading;
 using System.Runtime.InteropServices;
-using Auto_Clicker.Helpers;
-
+using SkillerAgent.Helpers;
+using System.IO;
+using System.Data;
+using System.Linq;
 
 /// <summary>
 /// Credit goes to Ryan Harrison (raharrison on GitHub) for starting this project.
 /// I'm introducing my own spin on it with some changes that hopefully help with games that are less auto-click friendly.
 /// </summary>
-namespace Auto_Clicker
+namespace SkillerAgent
 {
     public partial class MainForm : Form
     {
@@ -273,17 +275,101 @@ namespace Auto_Clicker
             }
         }
 
-        //Import from Excel
+        //Import from CSV
         private void ImportButton_Click(object sender, EventArgs e)
         {
+            //Open File Dialog, add filter
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "CSV (*.csv)|*.csv";
 
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                //Get path, pass to readCSV, import into datatable
+                string sFileName = ofd.FileName;
+                DataTable data = readCSV(sFileName);
+
+                //Iterate through rows, add datatable row to datagridview, < -1 to prevent extra "ghost" row from throwing error.
+                for (int i = 0; i < data.Rows.Count-1; i++)
+                {
+                    PositionsGridView.Rows.Add(data.Rows[i].ItemArray);
+                    string cellinfo = data.Rows[i].ItemArray.GetValue(0).ToString();
+                    string[] cells = cellinfo.Split(',');
+
+                    //Iterate through cells.
+                    for (int j = 0; j < PositionsGridView.Rows[i].Cells.Count; j++)
+                    {
+                        PositionsGridView.Rows[i].Cells[j].Value = cells[j];
+                    }
+                }
+            }
         }
 
-        //Save as Excel? CSV?
+        //Save as CSV
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            //Check for rows.
+            if (PositionsGridView.Rows.Count > 0)
+            {
+                //Save File Dialog, add filter/file name
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "CSV (*.csv)|*.csv";
+                sfd.FileName = "Output.csv";
+                bool fileError = false;
 
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    //Check if exists, if so, overwrite.
+                    if (File.Exists(sfd.FileName))
+                    {
+                        try
+                        {
+                            File.Delete(sfd.FileName);
+                        }
+                        catch (IOException ex)
+                        {
+                            fileError = true;
+                            MessageBox.Show("An error occurred while saving the data: " + ex.Message, "Error");
+                        }
+                    }
+                    
+                    //If doesn't exist/exists and can overwrite...
+                    if (!fileError)
+                    {
+                        try
+                        {
+                            int columnCount = PositionsGridView.Columns.Count;
+                            string columnNames = "";
+                            string[] outputCsv = new string[PositionsGridView.Rows.Count + 1];
+                            for (int i = 0; i < columnCount; i++)
+                            {
+                                columnNames += PositionsGridView.Columns[i].HeaderText.ToString() + ",";
+                            }
+                            outputCsv[0] += columnNames;
+
+                            for (int i = 0; i < PositionsGridView.Rows.Count - 1; i++)
+                            {
+                                for (int j = 0; j < columnCount; j++)
+                                {
+                                    outputCsv[i] += PositionsGridView.Rows[i - 1].Cells[j].Value.ToString() + ",";
+                                }
+                            }
+
+                            File.WriteAllLines(sfd.FileName, outputCsv, Encoding.UTF8);
+                            MessageBox.Show("Data Exported Successfully.", "Success");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("An error occurred :" + ex.Message, "Error");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no data to save. Please enter data in the data grid to save it.", "Error");
+            }
         }
+    
 
         #endregion
 
@@ -307,6 +393,26 @@ namespace Auto_Clicker
         {
             int temp = 0;
             return (int.TryParse(input, out temp)) && temp >= 0;
+        }
+
+        //Use Linq to read 
+        public DataTable readCSV(string filePath)
+        {
+            var dt = new DataTable();
+
+            // Creating the columns
+            File.ReadLines(filePath).Take(1)
+                .SelectMany(x => x.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                .ToList()
+                .ForEach(x => dt.Columns.Add(x.Trim()));
+
+            // Adding the rows
+            File.ReadLines(filePath).Skip(1)
+                .Select(x => x.Split(';'))
+                .ToList()
+                .ForEach(line => dt.Rows.Add(line));
+
+            return dt;
         }
 
         /// <summary>

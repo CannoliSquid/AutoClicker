@@ -1,6 +1,6 @@
 # Auto Clicker
 
-Small utility program to automatically and sequentially simulate clicks of a series of user defined points on the screen. Particularly useful for completeing repetitive clicking tasks within certain browser games.
+Small utility program to automatically and sequentially simulate clicks for a series of user defined points on the screen. Particularly useful for completing repetitive clicking tasks within certain browser games.
 
 ![image](https://user-images.githubusercontent.com/6787911/116591594-fe78a600-a8ec-11eb-8e3f-07bbf55e72d2.png)
 

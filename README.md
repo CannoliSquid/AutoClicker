@@ -2,7 +2,7 @@
 
 Small utility program to automatically and sequentially simulate clicks of a series of user defined points on the screen. Particularly useful for completeing repetitive clicking tasks within certain browser games.
 
-![Screenshot](https://imgur.com/TOuPSGX)
+![image](https://user-images.githubusercontent.com/6787911/116591594-fe78a600-a8ec-11eb-8e3f-07bbf55e72d2.png)
 
 Users can:
 

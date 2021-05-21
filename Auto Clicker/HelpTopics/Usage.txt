@@ -1,0 +1,29 @@
+Starting:
+
+
+To use this application, start by making sure that the window is active (clicking within the borders of the window) and hovering your mouse over your first clicking point.
+
+Pressing Shift + F1 will copy the current coordinates of the mouse (as shown in the upper left-hand panel) and copy them into the Skiller Agent.
+
+Next, determine whether this click is a left or right click (checking the "Right Click?" box if it is a right click, and unchecking the box if it is a left click). Edit the Time to Sleep (if necessary, this will provide a delay before the click happens).
+
+Once the details of the click are complete (X, Y, left/right click, time to sleep), press Shift + F2 or click the "Add Position" button. This will put the details of the click in to the Data Grid above (titled "Queued Cursor Positions").
+
+Repeat the steps above until all of the necessary clicks are queued. Then, on the bottom left hand side of the application in the panel titled "Starting Options", enter an integer for the number of times you would like the series of queued clicks to repeat.
+
+Once this number is entered, press Shift + F3 or click the "Start Clicking Queued Positions" button. The queue clicks will iterate and repeat for the number of times previously entered.
+
+The clicking will automatically stop once the number of iterations is complete. To stop the clicking prior to reaching the full number of iterations, you may have to manually click the "Stop Clicking" button (as the Shift + F4 shortcut may not work if the clicks are happening within another window, the other window may have control and register the keypress shortcut).
+
+------------------------------------------------------------------------------------------
+
+Other Features:
+
+
+By clicking a cell of the data grid, the information within the cell can be edited. Once the cell is highlighted, begin typing to edit the cell. 
+
+By double-clicking a cell of the data grid, a "paste" action can be peformed.
+
+The "Save" button can be used to save the current list of queued cursor positions (as a CSV file).
+
+The "Import" button allows the user to read a CSV file to import a list of queued cursor positions.

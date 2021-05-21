@@ -1,0 +1,17 @@
+Q: Where can I find the source code for this project?
+
+A: The source code can be found at:
+https://github.com/CannoliSquid/AutoClicker. 
+
+This project was forked from Ryan Harrison. The original source code comes from: 
+https://github.com/raharrison/AutoClicker
+
+
+Q: Why do you mention this application can be used for games and then mention multiple times that you are not liable?
+
+A: I am simply stating that it can be used for games, however, that does not mean there will not be potential consequences for using it. The repository for this project and the application itself contain disclaimers so that users are aware of the potential risks of using this tool. 
+This application can have many different uses and I am not liable for rules or legally binding documents that any user violates using this tool. There also may be some games that allow for the use of auto-clickers, and others that forbid the use of them. It is not my responsibility to research any and all games that do/do not allow the use of auto-clicking tools, so it is the responsibility of the user to do their own research.
+
+In other words: "Just because you can, does not mean you should".
+
+

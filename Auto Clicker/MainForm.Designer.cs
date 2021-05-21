@@ -64,11 +64,17 @@
             this.NumRepeatsTextBox = new System.Windows.Forms.TextBox();
             this.NumRepeatsLabel = new System.Windows.Forms.Label();
             this.CurrentPositionTimer = new System.Windows.Forms.Timer(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PositionsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PositionsGridView)).BeginInit();
             this.ListViewContextMenu.SuspendLayout();
             this.CurrentPosGroupBox.SuspendLayout();
             this.StartingOptionsGroupBox.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // PositionsGroupBox
@@ -85,7 +91,7 @@
             this.PositionsGroupBox.Controls.Add(this.QueuedYPositionLabel);
             this.PositionsGroupBox.Controls.Add(this.QueuedXPositionTextBox);
             this.PositionsGroupBox.Controls.Add(this.QueuedPositionsLabel);
-            this.PositionsGroupBox.Location = new System.Drawing.Point(285, 3);
+            this.PositionsGroupBox.Location = new System.Drawing.Point(285, 38);
             this.PositionsGroupBox.Name = "PositionsGroupBox";
             this.PositionsGroupBox.Size = new System.Drawing.Size(493, 340);
             this.PositionsGroupBox.TabIndex = 0;
@@ -254,7 +260,7 @@
             this.CurrentPosGroupBox.Controls.Add(this.XCoordLabel);
             this.CurrentPosGroupBox.Controls.Add(this.YCoordLabel);
             this.CurrentPosGroupBox.Controls.Add(this.CurrentXCoordTextBox);
-            this.CurrentPosGroupBox.Location = new System.Drawing.Point(12, 3);
+            this.CurrentPosGroupBox.Location = new System.Drawing.Point(12, 38);
             this.CurrentPosGroupBox.Name = "CurrentPosGroupBox";
             this.CurrentPosGroupBox.Size = new System.Drawing.Size(267, 157);
             this.CurrentPosGroupBox.TabIndex = 2;
@@ -311,7 +317,7 @@
             this.StartingOptionsGroupBox.Controls.Add(this.StartClickingButton);
             this.StartingOptionsGroupBox.Controls.Add(this.NumRepeatsTextBox);
             this.StartingOptionsGroupBox.Controls.Add(this.NumRepeatsLabel);
-            this.StartingOptionsGroupBox.Location = new System.Drawing.Point(12, 166);
+            this.StartingOptionsGroupBox.Location = new System.Drawing.Point(12, 201);
             this.StartingOptionsGroupBox.Name = "StartingOptionsGroupBox";
             this.StartingOptionsGroupBox.Size = new System.Drawing.Size(267, 177);
             this.StartingOptionsGroupBox.TabIndex = 2;
@@ -377,17 +383,60 @@
             this.CurrentPositionTimer.Interval = 1;
             this.CurrentPositionTimer.Tick += new System.EventHandler(this.CurrentPositionTimer_Tick);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(790, 24);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(790, 350);
+            this.ClientSize = new System.Drawing.Size(790, 388);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.StartingOptionsGroupBox);
             this.Controls.Add(this.CurrentPosGroupBox);
             this.Controls.Add(this.PositionsGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "Skiller Agent";
@@ -401,7 +450,10 @@
             this.CurrentPosGroupBox.PerformLayout();
             this.StartingOptionsGroupBox.ResumeLayout(false);
             this.StartingOptionsGroupBox.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -441,6 +493,11 @@
         private System.Windows.Forms.Button ImportButton;
         private System.Windows.Forms.Label IterationLabel;
         private System.Windows.Forms.Label IterationDescLabel;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 

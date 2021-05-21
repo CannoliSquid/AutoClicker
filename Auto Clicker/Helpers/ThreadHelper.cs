@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SkillerAgent.Properties;
 
 namespace SkillerAgent.Helpers
 {
@@ -248,6 +250,8 @@ namespace SkillerAgent.Helpers
         /// <returns></returns>
         private int[] PointRNGVariance()
         {
+            string xValue = ConfigurationManager.AppSettings["xVariance"];
+            string yValue = ConfigurationManager.AppSettings["xVariance"];
             Random pointxrng = new Random();
             Random pointyrng = new Random();
             Random pointxcoin = new Random();
@@ -256,9 +260,9 @@ namespace SkillerAgent.Helpers
             int[] genRNG = new int[4];
 
             //use 7 for x/5 for y for actual clicking around, 1 x/1 y for ha'ing
-            genRNG[0] = pointxrng.Next(0, 1);
+            genRNG[0] = pointxrng.Next(0, Convert.ToInt32(xValue));
             genRNG[1] = pointxcoin.Next(1, 2);
-            genRNG[2] = pointyrng.Next(0, 1);
+            genRNG[2] = pointyrng.Next(0, Convert.ToInt32(yValue));
             genRNG[3] = pointycoin.Next(1, 2);
 
             if (genRNG[1] == 2)
@@ -283,11 +287,12 @@ namespace SkillerAgent.Helpers
         /// <returns></returns>
         private int TimeRNGVariance()
         {
+            string timeValue = ConfigurationManager.AppSettings["timeVariance"];
 
             Random timerng = new Random();
             int timeVar;
 
-            timeVar = timerng.Next(0, 800);
+            timeVar = timerng.Next(0, Convert.ToInt32(timeValue));
 
             return timeVar;
         }

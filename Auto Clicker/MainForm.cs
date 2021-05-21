@@ -9,6 +9,7 @@ using SkillerAgent.Helpers;
 using System.IO;
 using System.Data;
 using System.Linq;
+using System.Configuration;
 
 /// <summary>
 /// Credit goes to Ryan Harrison (raharrison on GitHub) for starting this project.
@@ -49,8 +50,32 @@ namespace SkillerAgent
         {
             CurrentPositionTimer.Start();
             PositionsGridView.Rows.Clear();
-            //PositionsGridView.SelectedCells.
-            //PositionsListView.Items.Clear();
+            ReadAllSettings();
+        }
+
+        //Test to make sure settings are valid.
+        static void ReadAllSettings()
+        {
+            try
+            {
+                var appSettings = ConfigurationManager.AppSettings;
+
+                if (appSettings.Count == 0)
+                {
+                    Console.WriteLine("AppSettings is empty.");
+                }
+                else
+                {
+                    foreach (var key in appSettings.AllKeys)
+                    {
+                        Console.WriteLine("Key: {0} Value: {1}", key, appSettings[key]);
+                    }
+                }
+            }
+            catch (ConfigurationErrorsException)
+            {
+                Console.WriteLine("Error reading app settings");
+            }
         }
 
         /// <summary>
@@ -369,8 +394,41 @@ namespace SkillerAgent
                 MessageBox.Show("There is no data to save. Please enter data in the data grid to save it.", "Error");
             }
         }
-    
 
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form form = Application.OpenForms["HelpForm"];
+            if (form != null)
+            {
+                form.Close();
+            }
+            else
+            {
+                HelpForm help = new HelpForm();
+
+                help.Show();
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Environment.Exit(0);
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form form = Application.OpenForms["SettingsForm"];
+            if (form != null)
+            {
+                form.Close();
+            }
+            else
+            {
+                SettingsForm settings = new SettingsForm();
+
+                settings.Show();
+            }
+        }
         #endregion
 
         #region Helper Methods

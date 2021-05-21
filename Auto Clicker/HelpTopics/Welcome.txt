@@ -1,0 +1,9 @@
+Welcome to the SkillerAgent Auto Clicker!
+
+This application assists with tasks that require a lot of repetitive clicking. This can be especially helpful with certain video games that may require a lot of repetitions of tedious clicking actions.
+
+This tool allows the user to continue these repetitive actions and make progress, while allowing them to shift their attention and focus to other matters (most effectively, away-from-keyboard activities).
+
+Please keep in mind that, if using this tool with a game, it may be against Terms of service (ToS) or the End User License Agreement (EULA) and you may risk getting banned from the game. 
+
+Please read the "Disclaimer" section for more information.
